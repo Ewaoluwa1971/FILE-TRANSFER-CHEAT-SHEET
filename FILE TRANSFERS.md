@@ -231,7 +231,7 @@ bitsadmin /transfer job /download /priority high http://linux_ip/file C:\file
 certutil -encode file encoded & scp encoded user@linux_ip:/path/
 certutil -decode encoded file
 ```
-# 21. PYTHON-BASED TRANSFER METHODS
+## 21. PYTHON-BASED TRANSFER METHODS
 
 Python provides several built-in ways to transfer files between systems.
 Note: Python 2.x reached end-of-life in 2020 - Python3 is recommended.
@@ -331,7 +331,7 @@ Python 2.x:
 python -c "import socket; s=socket.socket(); s.connect(('linux_ip',1234)); s.send(open('file','rb').read())"
 ```
 
-22. Socat File Transfer
+## 22. Socat File Transfer
     
 ### Windows → Linux
 ```bash
