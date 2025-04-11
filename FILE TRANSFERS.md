@@ -235,59 +235,93 @@ Note: Python 2.x reached end-of-life in 2020 - Python3 is recommended.
 
 ### Linux → Windows Transfer:
 Start HTTP server on Linux (Python3):
+```bash
 python3 -m http.server 8000
+```
 Or Python 2.x:
+```bash
 python -m SimpleHTTPServer 8000
-
+```
 Windows download options:
 Using curl (if installed):
+```bash
 curl http://linux_ip:8000/file -o file
+```
 Using PowerShell:
+```bash
 Invoke-WebRequest http://linux_ip:8000/file -OutFile file
+```
 Using Python on Windows (Python3):
+```bash
 python -c "import urllib.request; urllib.request.urlretrieve('http://linux_ip:8000/file', 'file')"
+```
 Python 2.x:
+```bash
 python -c "import urllib; urllib.urlretrieve('http://linux_ip:8000/file', 'file')"
-
+```
 ### Windows → Linux Transfer:
 Start HTTP server on Windows (Python3):
+```bash
 python -m http.server 8000
+```
 Python 2.x:
+```bash
 python -m SimpleHTTPServer 8000
-
+```
 Linux download options:
+```bash
 wget http://windows_ip:8000/file
+```
 or:
+```bash
 curl -O http://windows_ip:8000/file
+```
 Using Python on Linux (Python3):
+```bash
 python3 -c "import urllib.request; urllib.request.urlretrieve('http://windows_ip:8000/file', 'file')"
+```
 Python 2.x:
+```bash
 python -c "import urllib; urllib.urlretrieve('http://windows_ip:8000/file', 'file')"
-
-## Direct Socket Transfer (Advanced)
+```
+## Direct Socket Transfer 
 
 ### Linux → Windows Transfer:
 First on Windows (receiver):
 Python3:
+```bash
 python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(); c,a=s.accept(); open('file','wb').write(c.recv(999999))"
+```
 Python 2.x:
+```bash
+```
 python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(); c,a=s.accept(); open('file','wb').write(c.recv(999999))"
 
 Then on Linux (sender):
 Python3:
+```bash
 python3 -c "import socket; s=socket.socket(); s.connect(('windows_ip',1234)); s.send(open('file','rb').read())"
+```
 Python 2.x:
+```bash
 python -c "import socket; s=socket.socket(); s.connect(('windows_ip',1234)); s.send(open('file','rb').read())"
-
+```
 ### Windows → Linux Transfer:
 First on Linux (receiver):
 Python3:
+```bash
 python3 -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(); c,a=s.accept(); open('file','wb').write(c.recv(999999))"
+```
 Python 2.x:
+```bash
 python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(); c,a=s.accept(); open('file','wb').write(c.recv(999999))"
-
+```
 Then on Windows (sender):
 Python3:
+```bash
 python3 -c "import socket; s=socket.socket(); s.connect(('linux_ip',1234)); s.send(open('file','rb').read())"
+```
 Python 2.x:
+```bash
 python -c "import socket; s=socket.socket(); s.connect(('linux_ip',1234)); s.send(open('file','rb').read())"
+```
