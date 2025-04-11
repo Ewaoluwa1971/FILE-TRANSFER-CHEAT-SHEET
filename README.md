@@ -1,4 +1,4 @@
-🛠️ Requirements Summary:
+Requirements Summary:
 
     SSH: OpenSSH on Windows (Windows 10+ built-in)
     PowerShell: Available on Windows and Linux
