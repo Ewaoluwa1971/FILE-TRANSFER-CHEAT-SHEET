@@ -24,6 +24,7 @@ This document provides a comprehensive list of command-line methods for transfer
 - [19. ZMODEM over SSH](#19-zmodem-over-ssh)
 - [20. WINDOWS NATIVE](#20-windows-native)
 - [21. PYTHON-BASED TRANSFER METHODS](#21-python-based-transfer-methods)
+- [22. Socat File Transfer](#22-socat-file-transfer)
 
 # Linux ↔ Windows CLI File Transfer Methods
 
@@ -328,4 +329,26 @@ python3 -c "import socket; s=socket.socket(); s.connect(('linux_ip',1234)); s.se
 Python 2.x:
 ```bash
 python -c "import socket; s=socket.socket(); s.connect(('linux_ip',1234)); s.send(open('file','rb').read())"
+```
+
+22. Socat File Transfer
+    
+### Windows → Linux
+```bash
+socat -u TCP-LISTEN:1234,reuseaddr - > file
+```
+
+Sender (Linux)
+```bash
+socat -u file TCP:windows_ip:1234
+```
+
+### Windows → Linux (listener on Linux)
+```bash
+socat -u TCP-LISTEN:1234,reuseaddr - > file
+```
+
+Sender (Windows)
+```bash
+socat -u file TCP:linux_ip:1234
 ```
