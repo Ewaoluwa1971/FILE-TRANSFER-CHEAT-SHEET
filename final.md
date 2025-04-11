@@ -1,3 +1,4 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━ START COPYING HERE ━━━━━━━━━━━━━━━━━━━━━━━━━
 markdown
 Copy
 
@@ -5,7 +6,7 @@ Copy
 
 ```mermaid
 graph TD
-    A[Transfer Method] --> B[Encrypted]
+    A[Transfer Methods] --> B[Encrypted]
     A --> C[Unencrypted]
     B --> D[SCP/SFTP]
     B --> E[RSYNC over SSH]
@@ -59,8 +60,6 @@ Table of Contents
     Python Methods
 
 1. SCP (Secure Copy)
-
-Requires OpenSSH on Windows
 bash
 Copy
 
@@ -310,3 +309,8 @@ pie
     "Unencrypted" : 35
 
     Security Note: Always prefer encrypted methods (SCP/SFTP/RSYNC over SSH) for sensitive data transfers.
+
+Copy
+
+
+**━━━━━━━━━━━━━━━━━━━━━━━━━ STOP COPYING HERE ━━━━━━━━━━━━━━━━━━━━━━━━━**
