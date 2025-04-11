@@ -27,164 +27,205 @@
 **Requires OpenSSH on Windows**
 
 ### Linux → Windows
+``` bash 
 scp /path/to/file user@windows_ip:"C:\\path\\to\\destination"
+ ```
 
 ### Windows → Linux (PowerShell)
+```bash
 scp "C:\path\to\file" user@linux_ip:/path/to/destination
-
+```
 ## 2. SFTP (SSH File Transfer)
 
 ### Linux → Windows
+```bash
 sftp user@windows_ip:"C:\\path\\to\\remote" <<< $'put localfile'
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 sftp user@linux_ip:/remote/path <<< "get remotefile localfile"
-
+```
 ## 3. RSYNC over SSH
 
 ### Linux → Windows (rsync on Windows required)
+```bash
 rsync -avz -e ssh /local/path/ user@windows_ip:"C:\\remote\\path"
-
+```
 ### Windows → Linux (PowerShell with rsync)
+```bash
 rsync -avz -e ssh user@linux_ip:/remote/path/ "C:\local\path"
-
+```
 ## 4. FTP/FTPS Command Line
 
 ### Linux → Windows
+```bash
 ftp -n windows_ip <<END_SCRIPT
 quote USER username
 quote PASS password
 put localfile remotefile
 quit
 END_SCRIPT
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 (echo "USER username" && echo "PASS password" && echo "get remotefile localfile" && echo "quit") | ftp linux_ip
-
+```
 ## 5. SMB/CIFS Client Mounts
 
 ### Linux → Windows (Mount first)
+```bash
 sudo mount -t cifs //windows_ip/share /mnt/win -o username=user,password=pass
 cp /local/file /mnt/win/path/
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 net use Z: \\linux_ip\share /user:username password
 copy "C:\file" Z:\path\
-
+```
 ## 6. Netcat (Unencrypted)
 
 ### Linux → Windows
 #### Windows listener (PowerShell):
+```bash
 nc -lvnp 1234 > file
+```
 #### Linux sender:
+```bash
 nc -w 3 windows_ip 1234 < file
-
+```
 ### Windows → Linux
 #### Linux listener:
+```bash
 nc -l -p 1234 > file
+```
 #### Windows sender (PowerShell):
+```bash
 nc linux_ip 1234 < file
-
+```
 ## 7. PowerShell Remoting (WinRM)
 
 ### Windows → Linux
+```bash
 Copy-Item -Path "C:\file" -Destination "\\linux_ip\share\" -ToSession (New-PSSession -HostName linux_ip -UserName user)
-
+```
 ## 8. Tar over SSH
 
 ### Linux → Windows
+```bash
 tar czf - /folder | ssh user@windows_ip "tar xzf - -C C:\\path"
-
+```
 ### Windows → Linux (WSL/PowerShell)
+```bash
 tar -cf - "C:\folder" | ssh user@linux_ip "tar xf - -C /path"
-
+```
 ## 9. Rclone (Cross-platform sync)
 
 ### Linux → Windows
+```bash
 rclone copy /local/path remote:windows_path --progress
-
+```
 ### Windows → Linux
+```bash
 rclone copy remote:linux_path "C:\backup\" --progress
-
+```
 ## 10. cURL (Various protocols)
 
 ### Linux → Windows (FTP)
+```bash
 curl -T file ftp://windows_ip/path/ --user user:pass
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 curl -u user:pass ftp://linux_ip/path/file -o file
-
+```
 ## 11. LFTP (Advanced FTP)
 
 ### Linux → Windows
+```bash
 lftp -e "put /local/file -o C:\\remote\\file; quit" ftp://user:pass@windows_ip
-
+```
 ## 12. TFTP (Trivial FTP)
 
 ### Linux → Windows
+```bash
 tftp -i windows_ip put file
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 tftp -i linux_ip get file
-
+```
 ## 13. Magic Wormhole
 
 ### Linux → Windows
+```bash
 wormhole send file
-
+```
 #### Windows receiver (PowerShell):
+```bash
 wormhole receive CODE
-
+```
 ## 14. Azure/AWS CLI
 
 ### Linux → Windows via Cloud
+```bash
 az storage blob upload --file localfile --container mycontainer --name remotefile
-
+```
 ### Windows download (PowerShell):
+```bash
 az storage blob download --container mycontainer --name remotefile --file localfile
-
+```
 ## 15. WebDAV (curl)
 
 ### Linux → Windows
+```bash
 curl -T file https://windows_ip/webdav/path/ --user user:pass
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 curl -u user:pass https://linux_ip/webdav/file -o file
-
+```
 ## 16. SSHFS (FUSE)
 
 ### Linux → Windows (Windows needs SSHFS-Win)
+```bash
 net use Z: \\sshfs\user@linux_ip!22/remote/path
-
+```
 ## 17. NFS (Windows NFS Client)
 
 ### Windows → Linux
+```bash
 mount -o anon linux_ip:/path Z:
-
+```
 ## 18. Base64 Encoding
 
 ### Linux → Windows
+```bash
 base64 file | ssh user@windows_ip "base64 -d > file"
-
+```
 ### Windows → Linux (PowerShell)
+```bash
 [Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\file")) | ssh user@linux_ip "base64 -d > file"
-
+```
 ## 19. ZMODEM over SSH
 
 ### Linux → Windows
+```bash
 sz file | ssh user@windows_ip
-
+```
 ### Windows → Linux (requires ZMODEM client)
+```bash
 rz | ssh user@linux_ip
-
+```
 ## 20. WINDOWS NATIVE
 ### Bitsadmin (Windows download):
+```bash
 bitsadmin /transfer job /download /priority high http://linux_ip/file C:\file
-
+```
 ### Certutil (Base64):
+```bash
 certutil -encode file encoded & scp encoded user@linux_ip:/path/
 certutil -decode encoded file
-
+```
 # 21. PYTHON-BASED TRANSFER METHODS
 
 Python provides several built-in ways to transfer files between systems.
