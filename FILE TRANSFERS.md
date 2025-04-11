@@ -294,8 +294,8 @@ python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(
 ```
 Python 2.x:
 ```bash
-```
 python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0',1234)); s.listen(); c,a=s.accept(); open('file','wb').write(c.recv(999999))"
+```
 
 Then on Linux (sender):
 Python3:
